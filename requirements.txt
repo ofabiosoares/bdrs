@@ -11,7 +11,7 @@ numpy
 plotly
 #plotly.graph_objects
 #plotly.express
-make_subplots
+#make_subplots
 matplotlib.pyplot
 vectorbt
 statsmodels
