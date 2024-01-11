@@ -5,7 +5,7 @@ timedelta
 pandas
 yfinance
 #urllib.request
-Request
+#Request
 urlopen
 numpy
 plotly.graph_objects
