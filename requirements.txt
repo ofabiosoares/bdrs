@@ -12,7 +12,8 @@ plotly
 #plotly.graph_objects
 #plotly.express
 #make_subplots
-matplotlib.pyplot
+matplotlib
+#matplotlib.pyplot
 vectorbt
 statsmodels
 GoogleNews
