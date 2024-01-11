@@ -4,7 +4,7 @@ timedelta
 #locale
 pandas
 yfinance
-urllib.request
+#urllib.request
 Request
 urlopen
 numpy
