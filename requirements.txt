@@ -8,8 +8,9 @@ yfinance
 #Request
 urlopen
 numpy
-plotly.graph_objects
-plotly.express
+plotly
+#plotly.graph_objects
+#plotly.express
 make_subplots
 matplotlib.pyplot
 vectorbt
