@@ -779,11 +779,12 @@ with tab4:
 #Aba Sobre o projeto ----------------------------------------------------------------------------------------------------------
 with tab5:
     import PIL.Image
-    perfil = PIL.Image.open("C:/Users/Paola Bitencourt/TCC/FOTO_PERFIL.PNG")
+    #perfil = st.image('FOTO_PERFIL.PNG')
+    #perfil = PIL.Image.open("C:/Users/Paola Bitencourt/TCC/FOTO_PERFIL.PNG")
     st.write('Este Projeto foi desenvolvido pelo Aluno Fábio Soares, para conclusão do Curso Python para o Mercado Financeiro, pela Trading com Dados.')
     col1, col2 = st.columns([0.25,0.75])
     with col1:
-        st.image(perfil, width = 250)
+        st.image('FOTO_PERFIL.PNG', width = 250)
         st.write('✉︎ ofabiosoares@outlook.com')
     with col2:
         st.write('')
