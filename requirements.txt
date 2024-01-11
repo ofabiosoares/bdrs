@@ -1,8 +1,8 @@
 streamlit
-locale
 datetime
 timedelta
 date
+locale
 pandas
 yfinance
 urllib
