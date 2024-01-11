@@ -1,7 +1,6 @@
 streamlit
 datetime
 timedelta
-date
 locale
 pandas
 yfinance
