@@ -1,4 +1,5 @@
 streamlit
+babel
 datetime
 timedelta
 #locale
