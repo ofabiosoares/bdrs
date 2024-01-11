@@ -1,7 +1,9 @@
 #Este Projeto foi desenvolvido pelo Aluno Fábio Soares, para conclusão do Curso Python para o Mercado Financeiro, pela Trading com Dados
 
 import streamlit as st
-import locale
+import babel
+from babel import Locale
+#import locale
 import datetime
 
 from datetime import datetime, timedelta
@@ -15,13 +17,10 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 import matplotlib.pyplot as plt
-#import seaborn as sns
-#import riskfolio as rp
 import vectorbt as vbt
 import statsmodels.api as sm
 
-#from pypfopt import HRPOpt
-#from pypfopt import expected_returns
+
 from GoogleNews import GoogleNews
 
 
@@ -34,7 +33,9 @@ st.set_page_config(layout= 'wide', page_title = 'BDRs!')
 #        footer {visibility: hidden;} #stDecoration {display:none;} </style> """, unsafe_allow_html=True)
 
 # setar locale para português
-locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
+locale = Locale('pt_BR')
+#locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
+
 
 #ajustando o cabecalho
 st.write('<style>div.block-container{padding-top:1.5rem;}</style>', unsafe_allow_html=True)
@@ -773,7 +774,6 @@ with tab4:
     #st.divider()
 
 #estva aqui a funcao de noticias
-
 
 
 #Aba Sobre o projeto ----------------------------------------------------------------------------------------------------------
