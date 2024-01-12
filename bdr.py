@@ -778,7 +778,7 @@ with tab4:
 
 #Aba Sobre o projeto ----------------------------------------------------------------------------------------------------------
 with tab5:
-    import PIL.Image
+    #import PIL.Image
     #perfil = st.image('FOTO_PERFIL.PNG')
     #perfil = PIL.Image.open("C:/Users/Paola Bitencourt/TCC/FOTO_PERFIL.PNG")
     st.write('Este Projeto foi desenvolvido pelo Aluno Fábio Soares, para conclusão do Curso Python para o Mercado Financeiro, pela Trading com Dados.')
