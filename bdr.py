@@ -369,8 +369,7 @@ def google_noticias(nova_pesquisa, inicio, fim):
             googlenews.search(i)
             bdr       = i
             google_resultado = googlenews.result()
-            
-            #if google_resultado: # verifica se a lista não está vazia
+   
             titulo    = google_resultado[0]['title']
             midia     = google_resultado[0]['media']
             dia       = google_resultado[0]['date']
@@ -384,11 +383,12 @@ def google_noticias(nova_pesquisa, inicio, fim):
     
 
         for i, row in df_noticias.iterrows():
-            st.write(row['bdr'])
-            st.write(row['titulo'])
-            st.write(row['midia'])
-            st.write(row['dia'])
-            st.write(row['link'])
+            st.write(f':green[Ativo     : ] {row["bdr"]}')
+            st.write(f':green[Notícia   : ] {row["titulo"]}')
+            st.write(f':green[Fonte     : ] {row["midia"]}')
+            st.write(f':green[Quando    : ] {row["dia"]}')
+            st.write(f':green[Link      : ] {row["link"]}')
+            #st.write(row['link'])
             st.divider()
     except:
         st.error('Não foi possível localizar notícias no momento, tente mais tarde', icon="⚠️")
