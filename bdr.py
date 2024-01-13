@@ -19,8 +19,6 @@ from plotly.subplots import make_subplots
 import matplotlib.pyplot as plt
 import vectorbt as vbt
 import statsmodels.api as sm
-
-
 from GoogleNews import GoogleNews
 
 
@@ -31,6 +29,38 @@ st.set_page_config(layout= 'wide', page_title = 'BDRs!')
 #st.markdown("""
 #    <style> .reportview-container { margin-top: -2em; } #MainMenu {visibility: hidden;} .stDeployButton {display:none;}
 #        footer {visibility: hidden;} #stDecoration {display:none;} </style> """, unsafe_allow_html=True)
+
+
+#ajuste das cores de fundo ----------------------------------------------
+# Define as cores do tema
+primaryColor="#FF4B4B"
+backgroundColor="#0E1117"
+secondaryBackgroundColor="#262730"
+textColor="#FAFAFA"
+font="sans-serif"
+
+# Define o tema
+custom_theme = f"""
+[data-testid="stTheme"][data-name="primaryColor"] div {{
+  background-color: {primaryColor};
+}}
+[data-testid="stTheme"][data-name="backgroundColor"] div {{
+  background-color: {backgroundColor};
+}}
+[data-testid="stTheme"][data-name="secondaryBackgroundColor"] div {{
+  background-color: {secondaryBackgroundColor};
+}}
+[data-testid="stTheme"][data-name="textColor"] div {{
+  color: {textColor};
+}}
+[data-testid="stTheme"][data-name="font"] div {{
+  font-family: {font};
+}}
+"""
+
+# Aplica o tema
+st.markdown(f'<style>{custom_theme}</style>', unsafe_allow_html=True)
+# fim do ajuste das cores de fundo ---------------------------------------------------------
 
 # setar locale para português
 locale = Locale('pt_BR')
@@ -361,7 +391,7 @@ def google_noticias(nova_pesquisa, inicio, fim):
             st.write(row['link'])
             st.divider()
     except:
-        st.error('Nao foi possivel efetuar pesquisa no momento, tente mais tarde')
+        st.error('Não foi possível localizar notícias no momento, tente mais tarde', icon="⚠️")
 
     return()
 #fim da funcao.................................................................
