@@ -360,42 +360,57 @@ def google_noticias(nova_pesquisa, inicio, fim):
 
     googlenews = GoogleNews(lang='pt-BR', start= inicio, end= fim )
 
-   
     lista = nova_pesquisa
     noticias = []
-    try:
-        for i in lista:
-            googlenews.clear()
-            googlenews.search(i)
-            bdr       = i
-            google_resultado = googlenews.result()
+
+    for i in lista:
+        googlenews.clear()
+        googlenews.search(i)
+        bdr       = i
+        google_resultado = googlenews.result()
+
+        dicionario = {'bdr':i}
+        try:
+            dicionario['titulo'] = google_resultado[0]['title']
+        except:
+            dicionario = {'titulo' :'sem notícia recente disponível'}
    
-            titulo    = google_resultado[0]['title']
-            midia     = google_resultado[0]['media']
-            dia       = google_resultado[0]['date']
+        try:
+            dicionario['midia'] = google_resultado[0]['media']
+        except:
+            dicionario = {'midia' :'sem notícia recente disponível'} 
+
+        try:
+            dicionario['dia'] = google_resultado[0]['date']
+        except:
+            dicionario = {'dia' :'sem notícia recente disponível'}
+
+        try:
             link      = google_resultado[0]['link']
-            link_real = link.split('&')[0]
-            dicionario = {'bdr':i,'titulo': titulo, 'midia': midia, 'dia': dia, 'link':link_real}
+            link_real  = link.split('&')[0]
+            dicionario['link'] = link_real
+        except:
+            dicionario = {'link' :'sem notícia recente disponível'}      
 
-            noticias.append(dicionario)
+        noticias.append(dicionario)
 
-        df_noticias = pd.DataFrame(noticias)
+    df_noticias = pd.DataFrame(noticias)
+    df_noticias.dropna(inplace = True)
     
 
-        for i, row in df_noticias.iterrows():
-            st.write(f':green[Ativo     : ] {row["bdr"]}')
-            st.write(f':green[Notícia   : ] {row["titulo"]}')
-            st.write(f':green[Fonte     : ] {row["midia"]}')
-            st.write(f':green[Quando    : ] {row["dia"]}')
-            st.write(f':green[Link      : ] {row["link"]}')
-            #st.write(row['link'])
-            st.divider()
-    except:
-        st.error('Não foi possível localizar notícias no momento, tente mais tarde', icon="⚠️")
+    for i, row in df_noticias.iterrows():
+        st.write(f':green[Ativo     : ] {row["bdr"]}')
+        st.write(f':green[Notícia   : ] {row["titulo"]}')
+        st.write(f':green[Fonte     : ] {row["midia"]}')
+        st.write(f':green[Quando    : ] {row["dia"]}')
+        st.write(f':green[Link      : ] {row["link"]}')
+        #st.write(row['link'])
+        st.divider()
+
+        #st.error('Não foi possível localizar notícias no momento, tente mais tarde', icon="⚠️")
 
     return()
 #fim da funcao.................................................................
-
 
 
 # webscraping dos dados de bdrs do site investnews
