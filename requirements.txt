@@ -8,7 +8,8 @@ yfinance
 #urllib.request
 #Request
 urlopen
-numpy
+# mudei aqui dia 03/05/24 por conta de erro no streamlit: numpy
+numpy ==1.23.5
 plotly
 #plotly.graph_objects
 #plotly.express
