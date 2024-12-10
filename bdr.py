@@ -251,7 +251,7 @@ def grafico_pesos(df_escolha_filtrados, pesos):
 def calcula_ibov(inicio):
     #benchmark para comparacao:
     ibov = yf.download('^BVSP', start = inicio)['Close']
-    ibov.rename(name='ibov', inplace = True) #estava sem o name = ibov
+    ibov.rename('ibov', inplace = True)  
     ibov = pd.DataFrame(ibov)
     ibov_retornos = ibov.pct_change().dropna()
     ibov_retornos_acm = round(((1+ibov_retornos).cumprod() * 100) - 100, 2) #retorno_acm_ibov
