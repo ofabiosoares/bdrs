@@ -161,11 +161,18 @@ def calcula_dd(df_escolha_filtrados, pesos):
     df_escolha_filtrados.index = df_escolha_filtrados.index.to_period('D').to_timestamp()
     
     with col_dd:
-        # Cria o portfólio com os dados ajustados
-        drawdown_carteira_original = vbt.Portfolio.from_orders(close=df_escolha_filtrados, size=pesos, size_type='targetpercent',
-        group_by=True, cash_sharing=True)
-        fig = drawdown_carteira_original.plot_underwater().update_layout(title='Drawdown do portfólio', height=350, width = 490, yaxis=dict( title='Queda %', tickformat = '.2%'))
-        st.plotly_chart(fig)
+      try:
+          # Cria o portfólio com os dados ajustados
+          drawdown_carteira_original = vbt.Portfolio.from_orders(close=df_escolha_filtrados, size=pesos, size_type='targetpercent',
+          group_by=True, cash_sharing=True)
+          fig = drawdown_carteira_original.plot_underwater().update_layout(title='Drawdown do portfólio', height=350, width = 490, yaxis=dict( title='Queda %', tickformat = '.2%'))
+          st.plotly_chart(fig)
+        
+      except Exception as e:
+            # Emite aviso caso ocorra um erro
+            st.warning("Não foi possível calcular o drawdown. Por favor, selecione um período maior para análise.")
+            st.error(f"Detalhes do erro: {e}")
+            fig = None  # Define o retorno como None em caso de erro
     return(fig)
 #fim da funcao drawdown -----------------------------------------------------------------------------
 
