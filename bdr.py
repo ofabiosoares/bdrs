@@ -165,7 +165,7 @@ def calcula_dd(df_escolha_filtrados, pesos):
     with col_dd:
         # Cria o portfólio com os dados ajustados
         drawdown_carteira_original = vbt.Portfolio.from_orders(close=df_escolha_filtrados, size=pesos, size_type='targetpercent',
-          group_by=True, cash_sharing=True)
+        group_by=True, cash_sharing=True)
         fig = drawdown_carteira_original.plot_underwater().update_layout(title='Drawdown do portfólio', height=350, width = 490, yaxis=dict( title='Queda %', tickformat = '.2%'))
         st.plotly_chart(fig)
     return(fig)
