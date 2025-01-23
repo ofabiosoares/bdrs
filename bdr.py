@@ -154,10 +154,7 @@ def calcula_beta_vol(carteira, ibov_retornos,df_escolha_filtrados_retorno, pesos
 #fim da funcao -----------------------------------------------------------------------------------------
 
 
-#DRAWDOWN: 1 - carteira original  com pesos iguais---------------------------------------------------
-def calcula_dd(df_escolha_filtrados,pesos):
-  
-
+#DRAWDOWN: 1 - carteira original  com pesos iguais---------------------------------------------------  
 def calcula_dd(df_escolha_filtrados, pesos):
     # Ajusta o índice do DataFrame para dias úteis
     df_escolha_filtrados = df_escolha_filtrados.asfreq('B')  # 'B' representa frequência de dias úteis
