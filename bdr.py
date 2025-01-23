@@ -156,8 +156,16 @@ def calcula_beta_vol(carteira, ibov_retornos,df_escolha_filtrados_retorno, pesos
 
 #DRAWDOWN: 1 - carteira original  com pesos iguais---------------------------------------------------
 def calcula_dd(df_escolha_filtrados,pesos):
+  
+
+def calcula_dd(df_escolha_filtrados, pesos):
+    # Ajusta o índice do DataFrame para dias úteis
+    df_escolha_filtrados = df_escolha_filtrados.asfreq('B')  # 'B' representa frequência de dias úteis
+    
     with col_dd:
-        drawdown_carteira_original = vbt.Portfolio.from_orders(close = df_escolha_filtrados, size= pesos,size_type = 'targetpercent', group_by=True, cash_sharing=True)
+        # Cria o portfólio com os dados ajustados
+        drawdown_carteira_original = vbt.Portfolio.from_orders(close=df_escolha_filtrados, size=pesos, size_type='targetpercent',
+          group_by=True, cash_sharing=True)
         fig = drawdown_carteira_original.plot_underwater().update_layout(title='Drawdown do portfólio', height=350, width = 490, yaxis=dict( title='Queda %', tickformat = '.2%'))
         st.plotly_chart(fig)
     return(fig)
