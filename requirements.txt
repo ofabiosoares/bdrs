@@ -10,7 +10,7 @@ yfinance
 urlopen
 # mudei aqui dia 03/05/24 por conta de erro no streamlit: numpy
 numpy ==1.23.5
-plotly
+plotly==5.7.0 # mudei aqui dia 5/04/25 por conta de erro no streamlit
 #plotly.graph_objects
 #plotly.express
 #make_subplots
