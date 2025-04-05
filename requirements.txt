@@ -17,7 +17,7 @@ plotly
 matplotlib
 #matplotlib.pyplot
 vectorbt ==0.24.0  # Especificar a versão do vectorbt (verifique a versão mais recente compatível)
-numba==0.51.2
+numba==0.53.1
 statsmodels
 GoogleNews
 #PIL
