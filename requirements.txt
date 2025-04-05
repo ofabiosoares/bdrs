@@ -3,6 +3,7 @@ babel
 datetime
 timedelta
 #locale
+lxml
 pandas
 yfinance
 #urllib.request
