@@ -1,24 +1,31 @@
-streamlit
-babel
-datetime
-timedelta
-#locale
-lxml
-pandas
-yfinance
-#urllib.request
-#Request
-urlopen
-# mudei aqui dia 03/05/24 por conta de erro no streamlit: numpy
-numpy ==1.23.5
-plotly==5.7.0 # mudei aqui dia 5/04/25 por conta de erro no streamlit
-#plotly.graph_objects
-#plotly.express
-#make_subplots
-matplotlib
-#matplotlib.pyplot
-vectorbt #==0.24.0  # Especificar a versão do vectorbt (verifique a versão mais recente compatível)
-numba==0.53.1
-statsmodels
-GoogleNews
-#PIL
+# ===============================
+# Core App
+# ===============================
+streamlit>=1.30
+babel>=2.12
+lxml>=4.9
+
+# ===============================
+# Data & Finance
+# ===============================
+pandas>=2.0
+numpy>=1.26
+yfinance>=0.2.33
+
+# ===============================
+# Visualization
+# ===============================
+plotly>=5.18
+matplotlib>=3.8
+
+# ===============================
+# Quant / Portfolio
+# ===============================
+vectorbt>=0.26
+numba>=0.58
+statsmodels>=0.14
+
+# ===============================
+# News / Scraping
+# ===============================
+GoogleNews>=1.6
