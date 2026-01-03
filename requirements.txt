@@ -7,7 +7,7 @@ numpy>=1.21,<1.24
 
 yfinance>=0.2.33
 
-plotly>=5.10,<6.0
+plotly==5.14.1
 matplotlib>=3.6,<3.8
 
 vectorbt==0.26.2
