@@ -83,7 +83,7 @@ def load_bdr(url):
 #fim da funcao................................................................................................
 
 #funcao para criar o df_escolha------------------------------------------------------------------------------
-@st.cache_data
+@st.cache_data(ttl=15*60)  # <<< 15 minutos é ideal
 def cria_df_escolha(tickers_escolha_yf,inicio, fim):
     df_escolha = pd.DataFrame()
     df_escolha = yf.download(tickers_escolha_yf, start = inicio, end = fim, rounding = True)['Close']
@@ -179,7 +179,7 @@ def calcula_dd(df_escolha_filtrados, pesos):
 
 
 #criando dataframe fundamentalista com base nas empresas escolhidas:
-@st.cache_data        
+@st.cache_data(ttl=6*60*60)  # <<< 6 horas
 def cria_df_fundamentalista(df_escolha_filtrados):
     data =  []
     dados = []
@@ -261,6 +261,7 @@ def grafico_pesos(df_escolha_filtrados, pesos):
 #fim da funcao de grafico dos pesos-------------------------------------
 
 #funcao para calcular o ibov-------------------------------------------
+@st.cache_data(ttl=24*60*60)  # <<< 24 horas
 def calcula_ibov(inicio):
     #benchmark para comparacao:
     ibov = yf.download('^BVSP', start = inicio)['Close']
@@ -852,6 +853,7 @@ with tab5:
         st.write('* Especialista em Investimentos CEA - Anbima')
         st.write('* Pós Graduado em Gestão de Negócios - IBMEC')
         st.write('* Graduado em Análise de Sistemas pela Estácio')
+
 
 
 
