@@ -83,7 +83,7 @@ def load_bdr(url):
 #fim da funcao................................................................................................
 
 #funcao para criar o df_escolha------------------------------------------------------------------------------
-@st.cache_data(ttl=15*60, show_spinner = 'Baixando dados do Yahoo Finance...)  # <<< 15 minutos é ideal
+@st.cache_data(ttl=15*60, show_spinner = 'Baixando dados do Yahoo Finance...')  # <<< 15 minutos é ideal
 def cria_df_escolha(tickers_escolha_yf,inicio, fim):
     tickers_escolha_yf = sorted(tickers_escolha_yf) #organiza os ativos selecionados para nao fazer buscas a toa no yahoo finance por conta do cache
     df_escolha = pd.DataFrame()
@@ -856,6 +856,7 @@ with tab5:
         st.write('* Especialista em Investimentos CEA - Anbima')
         st.write('* Pós Graduado em Gestão de Negócios - IBMEC')
         st.write('* Graduado em Análise de Sistemas pela Estácio')
+
 
 
 
