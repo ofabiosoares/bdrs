@@ -83,10 +83,11 @@ def load_bdr(url):
 #fim da funcao................................................................................................
 
 #funcao para criar o df_escolha------------------------------------------------------------------------------
-@st.cache_data(ttl=15*60)  # <<< 15 minutos é ideal
+@st.cache_data(ttl=15*60, show_spinner = 'Baixando dados do Yahoo Finance...)  # <<< 15 minutos é ideal
 def cria_df_escolha(tickers_escolha_yf,inicio, fim):
+    tickers_escolha_yf = sorted(tickers_escolha_yf) #organiza os ativos selecionados para nao fazer buscas a toa no yahoo finance por conta do cache
     df_escolha = pd.DataFrame()
-    df_escolha = yf.download(tickers_escolha_yf, start = inicio, end = fim, rounding = True)['Close']
+    df_escolha = yf.download(tickers_escolha_yf, start = inicio, end = fim, rounding = True, threads=False)['Close']
     df_escolha = pd.DataFrame(df_escolha)
         
     if len(tickers_escolha_yf)== 1: #quando so tem 1 ticker escolhido, da erro no filtro e no fundamentos
@@ -184,7 +185,9 @@ def cria_df_fundamentalista(df_escolha_filtrados):
     data =  []
     dados = []
 
-    stocks_fundamental = list(df_escolha_filtrados.columns)                         
+    #stocks_fundamental = list(df_escolha_filtrados.columns) 
+    #🔑 NORMALIZAÇÃO PARA CACHE
+    stocks_fundamental = sorted(df_escolha_filtrados.columns.tolist())
 
     for ticker in stocks_fundamental:
         company     = yf.Ticker(ticker)
@@ -853,6 +856,7 @@ with tab5:
         st.write('* Especialista em Investimentos CEA - Anbima')
         st.write('* Pós Graduado em Gestão de Negócios - IBMEC')
         st.write('* Graduado em Análise de Sistemas pela Estácio')
+
 
 
 
