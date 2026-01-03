@@ -13,3 +13,4 @@ matplotlib>=3.6,<3.8
 vectorbt==0.26.2
 numba==0.56.4
 statsmodels>=0.13,<0.15
+GoogleNews>=1.6
