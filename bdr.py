@@ -180,78 +180,98 @@ def calcula_dd(df_escolha_filtrados, pesos):
 
 
 #criando dataframe fundamentalista com base nas empresas escolhidas:
-@st.cache_data(ttl=6*60*60)  # <<< 6 horas
+@st.cache_data(ttl=6 * 60 * 60)  # cache de 6 horas
 def cria_df_fundamentalista(df_escolha_filtrados):
+    """
+    Cria um DataFrame com dados fundamentalistas via yfinance.
+    BDRs sem dados válidos são automaticamente ignorados.
+    A função NUNCA lança IndexError.
+    """
 
     data = []
 
-    # 🔑 NORMALIZAÇÃO PARA CACHE
-    stocks_fundamental = sorted(df_escolha_filtrados.columns.tolist())
+    # Normalização para cache (ordem determinística)
+    tickers = sorted(df_escolha_filtrados.columns.tolist())
 
-    for ticker in stocks_fundamental:
+    for ticker in tickers:
         try:
-            company     = yf.Ticker(ticker)
+            company = yf.Ticker(ticker)
 
-            fundamental_data = company.info
+            info        = company.info
             financials  = company.financials
             balance     = company.balancesheet
 
-            # ================= ALTERAÇÃO 1 =================
-            # Validação mínima dos dados fundamentais
-            if not fundamental_data or financials is None or balance is None:
-                continue  # <<< pula ticker sem dados
-            # =================================================
+            # =====================================================
+            # 1) Validação mínima do info
+            # =====================================================
+            if not info or not isinstance(info, dict):
+                continue
 
-            # ================= ALTERAÇÃO 2 =================
-            # Validação de linhas críticas nos demonstrativos
+            # =====================================================
+            # 2) Validação estrutural dos demonstrativos
+            # (yfinance pode retornar index sem colunas)
+            # =====================================================
+            if (
+                financials is None
+                or balance is None
+                or financials.empty
+                or balance.empty
+                or financials.shape[1] == 0
+                or balance.shape[1] == 0
+            ):
+                continue
+
+            # =====================================================
+            # 3) Validação das linhas críticas
+            # =====================================================
             if (
                 'Net Income' not in financials.index
                 or 'Stockholders Equity' not in balance.index
             ):
-                continue  # <<< evita IndexError
-            # =================================================
+                continue
 
-            fundamental_items = {
+            # =====================================================
+            # 4) Extração segura dos valores contábeis
+            # =====================================================
+            net_income = financials.loc['Net Income'].iloc[0]
+            equity     = balance.loc['Stockholders Equity'].iloc[0]
+
+            # =====================================================
+            # 5) Montagem do registro fundamentalista
+            # =====================================================
+            registro = {
                 'CÓDIGO': ticker,
-                'Company': fundamental_data.get('longName'),
-                'Sector': fundamental_data.get('sector'),
-                'MarketCap': fundamental_data.get('marketCap'),
-                'Revenue': fundamental_data.get('totalRevenue'),
-                'beta': fundamental_data.get('beta'),
-                'ebitda': fundamental_data.get('ebitda'),
-                'dividendRate': fundamental_data.get('dividendRate'),
-                'dividendYield': fundamental_data.get('dividendYield'),
-                'Gross Profit': fundamental_data.get('grossProfits'),
-
-                # ================= ALTERAÇÃO 3 =================
-                # Acesso seguro aos valores contábeis
-                'NetIncome': financials.loc['Net Income'].iloc[0],
-                'Total Equity': balance.loc['Stockholders Equity'].iloc[0],
-                # =================================================
-
-                'ROE': fundamental_data.get('returnOnEquity'),
-                'Sumario': fundamental_data.get('longBusinessSummary'),
-                'Website': fundamental_data.get('website')
+                'Company': info.get('longName'),
+                'Sector': info.get('sector'),
+                'MarketCap': info.get('marketCap'),
+                'Revenue': info.get('totalRevenue'),
+                'Beta': info.get('beta'),
+                'EBITDA': info.get('ebitda'),
+                'DividendRate': info.get('dividendRate'),
+                'DividendYield': info.get('dividendYield'),
+                'GrossProfit': info.get('grossProfits'),
+                'NetIncome': net_income,
+                'TotalEquity': equity,
+                'ROE': info.get('returnOnEquity'),
+                'Summary': info.get('longBusinessSummary'),
+                'Website': info.get('website')
             }
 
-            data.append(fundamental_items)
+            data.append(registro)
 
-        except Exception as e:
-            # ================= ALTERAÇÃO 4 =================
-            # Falha controlada por ticker (log silencioso)
-            # st.warning(f"Ticker ignorado por falta de dados: {ticker}")
+        except Exception:
+            # Falha silenciosa por ticker (padrão produção)
             continue
-            # =================================================
 
-    # ================= ALTERAÇÃO 5 =================
-    # Evita retornar DataFrame vazio
+    # =========================================================
+    # 6) Retorno seguro
+    # =========================================================
     if not data:
         return pd.DataFrame()
-    # =================================================
 
     df_fundamentalista = pd.DataFrame(data)
     df_fundamentalista.index = df_fundamentalista['CÓDIGO']
-    df_fundamentalista['CÓDIGO'] = df_fundamentalista['CÓDIGO'].str[0:-3]
+    df_fundamentalista['CÓDIGO'] = df_fundamentalista['CÓDIGO'].str.replace('.SA', '', regex=False)
 
     return df_fundamentalista
 #fim da funcao................................................................................................
@@ -893,6 +913,7 @@ with tab5:
         st.write('* Especialista em Investimentos CEA - Anbima')
         st.write('* Pós Graduado em Gestão de Negócios - IBMEC')
         st.write('* Graduado em Análise de Sistemas pela Estácio')
+
 
 
 
