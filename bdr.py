@@ -270,7 +270,7 @@ def cria_df_fundamentalista(df_escolha_filtrados):
         return pd.DataFrame()
 
     df_fundamentalista = pd.DataFrame(data)
-    df_fundamentalista.index = df_fundamentalista['CÓDIGO']
+    #df_fundamentalista.index = df_fundamentalista['CÓDIGO']
     df_fundamentalista['CÓDIGO'] = df_fundamentalista['CÓDIGO'].str.replace('.SA', '', regex=False)
 
     return df_fundamentalista
@@ -913,6 +913,7 @@ with tab5:
         st.write('* Especialista em Investimentos CEA - Anbima')
         st.write('* Pós Graduado em Gestão de Negócios - IBMEC')
         st.write('* Graduado em Análise de Sistemas pela Estácio')
+
 
 
 
